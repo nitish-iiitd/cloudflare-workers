@@ -281,6 +281,13 @@ async function handleMcpRequest(request) {
         );
     }
 
+    if (method === "notifications/initialized") {
+        return jsonResponse({
+            jsonrpc: "2.0",
+            result: {}
+        });
+    }
+
     if (method === "tools/list") {
         return jsonResponse(
             mcpResult(id, {
@@ -317,6 +324,16 @@ export default {
         }
 
         if (url.pathname === "/mcp") {
+
+            if (request.method === "GET") {
+                return jsonResponse({
+                    name: "backup-mcp",
+                    status: "ok",
+                    transport: "streamable-http",
+                    message: "Use POST /mcp for MCP JSON-RPC requests."
+                });
+            }
+
             if (request.method !== "POST") {
                 return jsonResponse({ error: "Use POST /mcp" }, 405);
             }
