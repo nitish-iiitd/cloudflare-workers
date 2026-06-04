@@ -266,6 +266,10 @@ async function handleMcpRequest(request) {
     const method = body.method;
     const params = body.params || {};
 
+    if (id === undefined || id === null) {
+        return new Response(null, { status: 204 });
+    }
+
     if (method === "initialize") {
         return jsonResponse(
             mcpResult(id, {
@@ -279,13 +283,6 @@ async function handleMcpRequest(request) {
                 },
             })
         );
-    }
-
-    if (method === "notifications/initialized") {
-        return jsonResponse({
-            jsonrpc: "2.0",
-            result: {}
-        });
     }
 
     if (method === "tools/list") {
