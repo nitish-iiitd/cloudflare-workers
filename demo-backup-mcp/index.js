@@ -300,6 +300,22 @@ async function handleMcpRequest(request) {
         return jsonResponse(mcpResult(id, callTool(toolName, toolArgs)));
     }
 
+    if (method === "prompts/list") {
+        return jsonResponse(
+            mcpResult(id, {
+                prompts: [],
+            })
+        );
+    }
+
+    if (method === "resources/list") {
+        return jsonResponse(
+            mcpResult(id, {
+                resources: [],
+            })
+        );
+    }
+
     return jsonResponse(mcpError(id, -32601, `Method not found: ${method}`), 400);
 }
 
